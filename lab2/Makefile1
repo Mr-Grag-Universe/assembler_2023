@@ -1,0 +1,34 @@
+AS = nasm
+LD = /usr/bin/ld
+
+ASFLAGS = -g -f elf64
+LDFLAGS = -static
+
+SRCS = lab.s
+OBJS_f = $(SRCS:.s=_f.o)
+OBJS_b = $(SRCS:.s=_b.o)
+
+EXE_f = lab
+EXE_b = lab
+
+all: $(SRCS) $(EXE_f)
+
+forward: $(SRCS) $(EXE_f)
+
+backward: $(SRCS) $(EXE_b)
+
+clean:
+	rm -rf $(EXE_f) $(EXE_b) $(OBJS_f) $(OBJS_b)
+
+$(EXE_f): $(OBJS_f)
+	$(LD) $(LDOBJS) $(OBJS_f) -o $@
+
+$(EXE_b): $(OBJS_b)
+	$(LD) $(LDOBJS) $(OBJS_b) -o $@
+
+$(OBJS_f): $(SRCS)
+	$(AS) $(ASFLAGS) $< -o $@
+
+$(OBJS_b): $(SRCS)
+	$(AS) $(ASFLAGS) $< -o $@
+
