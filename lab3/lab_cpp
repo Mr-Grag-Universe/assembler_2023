@@ -1,0 +1,37 @@
+#include <iostream>
+#include <string>
+
+int main() {
+	std::string s;
+	std::getline(std::cin, s);
+	bool flag{0}, space{s[0] == ' '};
+	for (size_t i = 0, j = 0; i < s.size(); ++i) {
+		if (s[i] == ' ') {
+			flag = 0;
+			s[j] = s[i];
+			++j;
+			space = 1;
+			continue;
+		}
+
+		if (flag)
+			continue;
+		if (!space) {
+			s[j] = s[i];
+			++j;
+			continue;
+		}
+
+		if (s[i] != s[0]) {
+			flag = 1;
+			space = 0;
+			continue;
+		}
+		space = 0;
+		flag = 0;
+		s[j] = s[i];
+		++j;
+	}
+	std::cout << s << std::endl;
+	return 0;
+}
